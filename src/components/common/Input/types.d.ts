@@ -4,9 +4,9 @@ export type InputProps = {
   name?: string;
   id: string;
   label: string;
-  type: "text" | "password" | "number" | "tel" | "hidden";
+  type: "text" | "password" | "email" | "number" | "tel" | "hidden";
   placeholder: string;
-  error: string;
+  error: string | undefined;
   register: {};
-  onChange?: (e: HTMLElement<ChangeEvent>) => {};
+  onChange?: (e: HTMLInputElement<ChangeEvent>) => {};
 };
