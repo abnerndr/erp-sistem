@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Head from "next/head";
 import { useState } from "react";
-import Header from "../common/Header";
+import Sidebar from "../common/Sidebar";
 
 const pageVariants = {
   initial: {
@@ -56,9 +56,6 @@ const SiteLayout = ({
   const pageTitle = fullTitle ? fullTitle : defaultTitle;
   const pageDescription = description || process.env.siteMeta?.description;
   const pageImage = ogImage || process.env.siteMeta?.imageUrl;
-  const [franchisees, setFranchisees] = useState(null);
-  const [subscription, setSubscription] = useState(null);
-  const [license, setLicense] = useState(null);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -77,29 +74,34 @@ const SiteLayout = ({
         <title>{pageTitle}</title>
       </Head>
 
-      {withHeader && <Header />}
-      {process.env.vercel === "development" && (
-        <div className="max-w-7xl w-full mx-auto sm:px-6 lg:px-8">
-          {/* inserir se é ambiente de produção ou dev */}
-        </div>
-      )}
-      <main className="flex-grow z-50 ml-[12%] mt-[3%] pl-5 pt-5">
-        {/* inserir o toaster de notificações aqui */}
-        {(animate && (
-          <motion.div
-            initial="initial"
-            animate="in"
-            exit="out"
-            variants={pageVariants}
-            transition={pageTransition}
-            {...props}
-          >
-            {children}
-          </motion.div>
-        )) || <div {...props}>{children}</div>}
-      </main>
-      {/* adicionar o footer a baixo */}
-      {withFooter && <></>}
+      <div>
+        {withHeader && (
+          <Sidebar>
+            {process.env.vercel === "development" && (
+              <div className="max-w-7xl w-full mx-auto sm:px-6 lg:px-8">
+                {/* inserir se é ambiente de produção ou dev */}
+              </div>
+            )}
+            <main className="flex-grow">
+              {/* inserir o toaster de notificações aqui */}
+              {(animate && (
+                <motion.div
+                  initial="initial"
+                  animate="in"
+                  exit="out"
+                  variants={pageVariants}
+                  transition={pageTransition}
+                  {...props}
+                >
+                  {children}
+                </motion.div>
+              )) || <div {...props}>{children}</div>}
+            </main>
+            {/* adicionar o footer a baixo */}
+            {withFooter && <></>}
+          </Sidebar>
+        )}
+      </div>
     </div>
   );
 };
