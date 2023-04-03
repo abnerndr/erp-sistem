@@ -1,12 +1,15 @@
 import Modal from "@/components/common/Modal";
 import { CustomerForm, CustomerModalProps } from "./types";
 import Input from "@/components/common/Input";
-import { useForm } from "react-hook-form";
+import InputUrl from "@/components/common/Input/InputUrl";
+import InputTeams from "./InputTeams";
+import { Controller, useForm } from "react-hook-form";
 import Select from "@/components/common/Select";
 import { useState } from "react";
 import Date from "@/components/common/Input/Date";
 import Checkbox from "@/components/common/Checkbox";
 import Address from "@/components/form/Address";
+import Button from "@/components/common/Button";
 
 const personType = Object.values([
   { value: "physical_person", label: "Pessoa Fisíca" },
@@ -126,7 +129,7 @@ function CustomerModal({ open, setOpen }: CustomerModalProps) {
                     id="customer_since"
                     type="date"
                     label="cliente desde?"
-                    register={register("customer_since")}
+                    {...register("customer_since")}
                     error={errors.customer_since?.message}
                   />
                 </div>
@@ -184,7 +187,87 @@ function CustomerModal({ open, setOpen }: CustomerModalProps) {
             {/* contato */}
             <div className="flex flex-col mb-5">
               <div className="flex flex-row items-center w-full gap-x-3">
-                <div className="w-[100%]"></div>
+                <div className="w-full">
+                  <div className="flex items-center gap-x-3">
+                    <div className="w-[90%]">
+                      <Controller
+                        control={control}
+                        name="person_contacts"
+                        render={({ field: { onChange, ...rest } }) => (
+                          <Input
+                            id="person_contacts"
+                            type="text"
+                            label="pessoas de contato"
+                            placeholder="Jonh Doe"
+                            onChange={onChange}
+                            error={errors.person_contacts?.message}
+                            {...rest}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className="w-[10%] pt-12">
+                      <Button type={"button"} color={"primary"}>
+                        + adicionar
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-row items-center w-full gap-x-3">
+                <div className="w-[50%]">
+                  <Input
+                    id="phone"
+                    type="text"
+                    label="telefone (opcional)"
+                    {...register("phone")}
+                    placeholder="+55 (00) 0000-0000"
+                    error={errors.phone?.message}
+                  />
+                </div>
+                <div className="w-[50%]">
+                  <Input
+                    id="cellphone"
+                    type="text"
+                    label="celular (opcional)"
+                    {...register("cellphone")}
+                    placeholder="+55 (00) 0 0000-0000"
+                    error={errors.cellphone?.message}
+                  />
+                </div>
+                <div className="w-[50%]">
+                  <Input
+                    id="email"
+                    type="text"
+                    label="e-mail de contato"
+                    {...register("email")}
+                    placeholder="usuario@email.com"
+                    error={errors.email?.message}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-row items-center w-full gap-x-3">
+                <div className="w-[50%]">
+                  <InputUrl
+                    id="website"
+                    type="text"
+                    urlLocal={false}
+                    label="Web Site"
+                    {...register("website")}
+                    error={errors.website?.message}
+                  />
+                </div>
+                <div className="w-[50%]">
+                  <InputTeams
+                    id="teams_user"
+                    type="text"
+                    label="Conta Teams (opicional)"
+                    {...register("teams_user")}
+                    error={errors.teams_user?.message}
+                  />
+                </div>
               </div>
             </div>
           </form>

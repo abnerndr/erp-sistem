@@ -21,6 +21,18 @@ export type InputDateProps = {
   type: "text" | "date";
   placeholder?: string;
   error: string | undefined;
-  register: {};
+  register?: UseFormRegister<T>;
+  onChange?: (e: HTMLInputElement<ChangeEvent>) => {};
+};
+
+export type InputUrlProps = {
+  name?: string;
+  id: string;
+  label: string;
+  type: "text";
+  placeholder?: string;
+  error: string | undefined;
+  urlLocal?: boolean;
+  register?: UseFormRegister<T>;
   onChange?: (e: HTMLInputElement<ChangeEvent>) => {};
 };

@@ -47,4 +47,27 @@ export type CustomerForm = {
   complement: string | null;
   number: string | null;
   neighborhood: string | null;
+  person_contacts: T[];
+  phone: string | null;
+  cellphone: string | null;
+  email: string | null;
+  website: string | null;
+  teams_user: string | null;
+  at_date: Date;
+};
+
+import { UseFormRegister } from "react-hook-form";
+
+type InputTeamsProps = {
+  value?: T;
+  name?: string;
+  id: string;
+  label: string;
+  url?: string;
+  type: "text" | "password" | "email" | "number" | "tel" | "hidden";
+  disabled?: boolean;
+  placeholder?: string;
+  error: string | undefined;
+  register?: UseFormRegister<T>;
+  onChange?: (...e: T[]) => void;
 };
