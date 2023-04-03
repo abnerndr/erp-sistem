@@ -19,7 +19,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
             "bg-green-500 hover:bg-green-400 focus-visible:outline-green-500",
           color === "dark" &&
             "bg-dark-500 hover:bg-dark-400 focus-visible:outline-dark-500",
-          "flex w-full justify-center rounded-md text-white py-2 px-3 text-sm font-semibold  shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+          "flex w-full justify-center rounded-md text-white py-2 px-3 text-sm font-semibold shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
         )}
       >
         {children}

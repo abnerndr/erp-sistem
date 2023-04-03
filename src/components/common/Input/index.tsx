@@ -5,9 +5,20 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 import { InputProps } from "./types";
+import classNames from "classnames";
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { label, type, id, name, placeholder, error, ...rest } = props;
+  const {
+    label,
+    type,
+    value,
+    disabled,
+    id,
+    name,
+    placeholder,
+    error,
+    ...rest
+  } = props;
 
   const [display, setDisplay] = useState<boolean>(false);
   const handleDisplayPass = () => {
@@ -29,7 +40,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           ref={ref}
           id={id}
           name={name}
+          defaultValue={value}
           type={inputType}
+          disabled={disabled}
           placeholder={placeholder}
           className="block w-full rounded-md border-0 text-dark-500 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-500 sm:text-sm sm:leading-6"
         />

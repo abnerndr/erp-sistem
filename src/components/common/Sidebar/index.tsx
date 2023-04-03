@@ -1,12 +1,9 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
   HomeIcon,
-  UsersIcon,
+  IdentificationIcon,
+  UserGroupIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import erplogo from "../../../assets/images/erp.png";
@@ -17,14 +14,29 @@ import LargeScreen from "./components/LargeScreen";
 import Navigation from "./components/Navigation";
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Cadastros", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+  {
+    name: "home",
+    icon: HomeIcon,
+    current: false,
+    module: "Home",
+    href: "/private/home",
+    permissions: ["ReadHome"],
+  },
+  {
+    name: "cadastros",
+    module: "Cadastros",
+    icon: UserGroupIcon,
+    current: false,
+    children: [
+      {
+        name: "clientes/fornecedores",
+        href: "/private/customer/list",
+        permissions: ["ReadCustomers"],
+      },
+    ],
+  },
 ];
+
 const teams = [
   {
     id: 1,
@@ -66,6 +78,11 @@ const userNavigation = [
 
 function Sidebar({ children }: SidebarProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeNav, setActive] = useState<string>("Home");
+
+  useEffect(() => {
+    Object.values(navigation).map((item) => setActive(item.name));
+  }, [navigation]);
 
   return (
     <>
@@ -124,6 +141,7 @@ function Sidebar({ children }: SidebarProps) {
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <Mobile
+                    activeNav={activeNav}
                     navigation={navigation}
                     teams={teams}
                     logo={erplogo}
@@ -135,7 +153,12 @@ function Sidebar({ children }: SidebarProps) {
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <LargeScreen navigation={navigation} teams={teams} logo={erplogo} />
+        <LargeScreen
+          activeNav={activeNav}
+          navigation={navigation}
+          teams={teams}
+          logo={erplogo}
+        />
 
         <div className="lg:pl-72">
           <Navigation

@@ -1,8 +1,14 @@
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { Disclosure } from "@headlessui/react";
+import {
+  Cog6ToothIcon,
+  HomeIcon,
+  IdentificationIcon,
+} from "@heroicons/react/24/outline";
 import classNames from "classnames";
+import { useState } from "react";
 import { LargeScreenProps } from "./types";
 
-function LargeScreen({ navigation, teams, logo }: LargeScreenProps) {
+function LargeScreen({ navigation, activeNav, teams, logo }: LargeScreenProps) {
   return (
     <>
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
@@ -15,25 +21,93 @@ function LargeScreen({ navigation, teams, logo }: LargeScreenProps) {
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
-                  {navigation.map((item) => (
-                    <li key={item.name}>
-                      <a
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-800 text-white"
-                            : "text-gray-400 hover:text-white hover:bg-gray-800",
-                          "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
-                        )}
+                  {/*  */}
+                  {navigation.map((item) =>
+                    (!item.children && item.module) || item.permissions ? (
+                      <div key={item.name}>
+                        <a
+                          href={item.href}
+                          className={classNames(
+                            item.name === activeNav
+                              ? "text-primary-700"
+                              : "bg-gray-900 text-gray-200 hover:bg-gray-800 hover:text-gray-300",
+                            "group w-full flex items-center pl-2 py-2 text-sm font-medium rounded-md"
+                          )}
+                        >
+                          <item.icon
+                            className={classNames(
+                              item.name === activeNav
+                                ? "text-primary-700"
+                                : "text-gray-50 group-hover:text-gray-200",
+                              "mr-3 flex-shrink-0 h-6 w-6"
+                            )}
+                            aria-hidden="true"
+                          />
+                          {item.name}
+                        </a>
+                      </div>
+                    ) : item.module ? (
+                      <Disclosure
+                        as="div"
+                        key={item.name}
+                        className="space-y-1"
                       >
-                        <item.icon
-                          className="h-6 w-6 shrink-0"
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
+                        {({ open }) => (
+                          <>
+                            <Disclosure.Button
+                              className={classNames(
+                                item.name === activeNav
+                                  ? "bg-gray-900 text-gray-200"
+                                  : "bg-gray-900 text-gray-200 hover:bg-gray-800 hover:text-gray-300",
+                                "group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none  focus:ring-gray-200"
+                              )}
+                            >
+                              <item.icon
+                                className="mr-3 flex-shrink-0 h-6 w-6 text-gray-50 group-hover:text-gray-200"
+                                aria-hidden="true"
+                              />
+                              <span className="flex-1">{item.name}</span>
+                              <svg
+                                className={classNames(
+                                  open
+                                    ? "text-gray-50 rotate-90"
+                                    : "text-gray-50",
+                                  "ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-100 transition-colors ease-in-out duration-150"
+                                )}
+                                viewBox="0 0 20 20"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  d="M6 6L14 10L6 14V6Z"
+                                  fill="currentColor"
+                                />
+                              </svg>
+                            </Disclosure.Button>
+                            <Disclosure.Panel className="space-y-1">
+                              {item.children?.map(
+                                (subItem: {
+                                  name: string;
+                                  href: string;
+                                  permissions?: any[] | undefined;
+                                }) =>
+                                  subItem.permissions && (
+                                    <Disclosure.Button
+                                      key={subItem.name}
+                                      as="a"
+                                      href={subItem.href}
+                                      className="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-gray-400 hover:bg-gray-800"
+                                    >
+                                      {subItem.name}
+                                    </Disclosure.Button>
+                                  )
+                              )}
+                            </Disclosure.Panel>
+                          </>
+                        )}
+                      </Disclosure>
+                    ) : null
+                  )}
+                  {/*  */}
                 </ul>
               </li>
               <li>
