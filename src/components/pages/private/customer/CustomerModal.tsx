@@ -2,7 +2,6 @@ import Modal from "@/components/common/Modal";
 import { CustomerForm, CustomerModalProps } from "./types";
 import Input from "@/components/common/Input";
 import InputUrl from "@/components/common/Input/InputUrl";
-import InputTeams from "./InputTeams";
 import { Controller, useForm } from "react-hook-form";
 import Select from "@/components/common/Select";
 import { useState } from "react";
@@ -10,6 +9,8 @@ import Date from "@/components/common/Input/Date";
 import Checkbox from "@/components/common/Checkbox";
 import Address from "@/components/form/Address";
 import Button from "@/components/common/Button";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import Avatar from "@/components/common/Avatar";
 
 const personType = Object.values([
   { value: "physical_person", label: "Pessoa Fisíca" },
@@ -54,7 +55,10 @@ function CustomerModal({ open, setOpen }: CustomerModalProps) {
   return (
     <>
       <Modal open={open} setOpen={setOpen}>
-        <div className="container  mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container w-full mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full flex flex-row justify-end">
+            <XMarkIcon className="w-6 h-6" />
+          </div>
           <form>
             <h2 className="text-base font-semibold leading-7 text-dark-500">
               Dados cadastrais
@@ -249,7 +253,7 @@ function CustomerModal({ open, setOpen }: CustomerModalProps) {
               </div>
 
               <div className="flex flex-row items-center w-full gap-x-3">
-                <div className="w-[50%]">
+                <div className="w-[40%]">
                   <InputUrl
                     id="website"
                     type="text"
@@ -259,15 +263,51 @@ function CustomerModal({ open, setOpen }: CustomerModalProps) {
                     error={errors.website?.message}
                   />
                 </div>
-                <div className="w-[50%]">
-                  <InputTeams
+                <div className="w-[40%]">
+                  <Input
                     id="teams_user"
                     type="text"
                     label="Conta Teams (opicional)"
                     {...register("teams_user")}
                     error={errors.teams_user?.message}
+                    placeholder="@meuusuario"
                   />
                 </div>
+                <div className="w-[20%]">
+                  <Date
+                    id="next_date"
+                    type="date"
+                    label="próxima visita"
+                    {...register("next_date")}
+                    error={errors.next_date?.message}
+                  />
+                </div>
+              </div>
+            </div>
+            <h2 className="text-base font-semibold leading-7 text-dark-500 ">
+              Adicionais
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-dark-300">
+              Informaçõe adicionar para complementar o cliente ou fornecedor.
+            </p>
+            {/* adicionais */}
+            <div className="flex flex-col mb-5">
+              <div className="flex flex-row items-center w-full gap-x-3">
+                <div className="w-[100%]">
+                  <Avatar
+                    label="foto de perfil (opiciona)"
+                    id="photo"
+                    fileUrl=""
+                    buttonTitle="Adicionar foto ao perfil"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-row items-center w-full gap-x-3">
+                <div className="w-[50%]"></div>
+                <div className="w-[50%]"></div>
+              </div>
+              <div className="flex flex-row items-center w-full gap-x-3">
+                <div className="w-[100%]"></div>
               </div>
             </div>
           </form>

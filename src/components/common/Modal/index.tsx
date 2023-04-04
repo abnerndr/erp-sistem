@@ -40,7 +40,7 @@ function Modal({ children, open, setOpen }: ModalProps) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-7xl sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all mt-20 mb-5 sm:w-full max-w-6xl sm:max-w-6xl xl:max-w-7xl sm:p-6 ml-[20%] sm:ml-[20%] xl:ml-[20%]">
                 {children}
               </Dialog.Panel>
             </Transition.Child>

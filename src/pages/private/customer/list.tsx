@@ -49,10 +49,14 @@ function List() {
     <>
       <Layout withHeader title="clientes e fornecedores">
         <div>
-          <CustomerList list={customer} openModal={handleOpenModalForm} />
+          <CustomerList
+            list={customer}
+            openModal={handleOpenModalForm}
+            openModalForm={openModalForm}
+            setOpenModalForm={setOpenModalForm}
+          />
         </div>
       </Layout>
-      <CustomerModal open={openModalForm} setOpen={setOpenModalForm} />
     </>
   );
 }
